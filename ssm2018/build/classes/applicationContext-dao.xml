@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:context="http://www.springframework.org/schema/context"
+		xmlns:aop="http://www.springframework.org/schema/aop"
+		xmlns:tx="http://www.springframework.org/schema/tx"
+		xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+
+   <!-- 1 配置注解的自动扫描-->
+   <context:component-scan base-package="com.jackie.springmvc">
+		<!-- 排除 -->
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+   </context:component-scan>
+   
+	<context:annotation-config/>
+	
+	<aop:aspectj-autoproxy proxy-target-class="true"/>
+
+	<tx:annotation-driven transaction-manager="transactionManager"	proxy-target-class="true" />
+	<bean id="transactionManager"	class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	 <!--********************************************配置mybatis********************************************-->
+
+	<!-- 配置mybatis数据源 -->
+  <bean name="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+		<property name="url" value="jdbc:mysql://localhost:3306/ssm0315?useUnicode=true&amp;characterEncoding=utf8"/>
+		<property name="username" value="root" />
+		<property name="password" value="123456" />
+	</bean>
+	
+	<!-- 配置session工厂 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+	 <!-- 注入数据库连接池 -->
+		<property name="dataSource" ref="dataSource" />
+	 <!-- 配置MyBaties全局配置文件:mybatis-config.xml -->
+		<property name="configLocation" value="classpath:MybatisConf.xml"/>
+	 <!-- 扫描sql配置文件:mapper需要的xml文件 -->
+		<property name="mapperLocations" value="classpath:com/jackie/springmvc/**/*Mapper.xml" />
+	</bean>
+	<!-- 4.配置扫描Dao接口包，动态实现Dao接口，注入到spring容器中 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+    <!-- 给出需要扫描Dao接口包 -->
+		<property name="basePackage" value="com.jackie.springmvc"/>
+		<property name="annotationClass" value="org.springframework.stereotype.Repository"/>
+	</bean>
+    
+    
+    
+   
+	
+	
+	
+ </beans>

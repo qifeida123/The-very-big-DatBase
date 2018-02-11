@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>    
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.jackie.springmvc.repository.PersonRepository"> 
+     <insert id="create" parameterType="P">
+     	insert into person (id,address,created,phone,remark,username) 
+     	 values(#{id},#{address},#{created},#{phone},#{remark},#{username})
+     </insert>
+     
+     <delete id="delete" parameterType="int">
+     	delete from person where id=#{id}
+     </delete>
+          
+     <update id="update" parameterType="P">
+     	update person set id=#{id},address=#{address},
+     		created=#{created},phone=#{phone},remark=#{remark},username=#{username} 
+     	  	where id=#{id}
+     </update>
+
+    <select id="getById" parameterType="int" resultType="P">  
+        select * from person where id=#{id}
+    </select>  
+    
+    <select id="getByCondition" parameterType="P" resultType="P">  
+        select * from person
+        <where>
+        	<if test="id!=null &amp;&amp;id > 0">
+        		and id=#{id}
+        	</if>  
+        	<if test="address!=null &amp;&amp; address!=''">
+        		and address=#{address}
+        	</if>
+        	<if test="username!=null &amp;&amp; username!=''">
+        		and username=#{username}
+        	</if>        	
+        </where>
+    </select> 
+</mapper>
