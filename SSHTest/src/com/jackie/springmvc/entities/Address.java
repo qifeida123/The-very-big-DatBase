@@ -1,11 +1,26 @@
 package com.jackie.springmvc.entities;
 
+import javax.persistence.*;
+
+@Entity
 public class Address {
-	 
+	@Id
     private String province;
+	@Column
     private String city;
- 
-    public String getProvince() {
+	@OneToOne
+	@JoinColumn(name = "us")
+	private User7 user;
+	
+    public User7 getUser() {
+		return user;
+	}
+
+	public void setUser(User7 user) {
+		this.user = user;
+	}
+
+	public String getProvince() {
         return province;
     }
  
@@ -25,4 +40,5 @@ public class Address {
     public String toString() {
         return "Address [province=" + province + ", city=" + city + "]";
     }
+    
 }

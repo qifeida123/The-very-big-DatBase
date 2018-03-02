@@ -1,13 +1,21 @@
 package com.jackie.springmvc.entities;
 
-public class User {
-	 
+import javax.persistence.*;
+
+@Entity
+public class User7 {
+	@Id
     private Integer id;
     private String username;
     private String password;
     private String email;
     private int age;
+    @OneToOne
+    //@JoinColumn(name = "ad")
     private Address address;
+    public Address getAddress() {
+        return address;
+    }
  
     public Integer getId() {
         return id;
@@ -49,15 +57,13 @@ public class User {
         this.age = age;
     }
  
-    public Address getAddress() {
-        return address;
-    }
+    
  
     public void setAddress(Address address) {
         this.address = address;
     }
  
-    public User(String username, String password, String email, int age) {
+    public User7(String username, String password, String email, int age) {
         super();
         this.username = username;
         this.password = password;
@@ -65,7 +71,7 @@ public class User {
         this.age = age;
     }
  
-    public User(Integer id, String username, String password, String email, int age) {
+    public User7(Integer id, String username, String password, String email, int age) {
         super();
         this.id = id;
         this.username = username;
@@ -80,7 +86,7 @@ public class User {
                 + age + ", address="+ address +"]";
     }
  
-    public User() {
+    public User7() {
  
     }
 }

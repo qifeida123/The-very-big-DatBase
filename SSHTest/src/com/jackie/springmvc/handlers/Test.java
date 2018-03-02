@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.jackie.springmvc.entities.User;
+import com.jackie.springmvc.entities.User7;
 @RequestMapping("/springmvc")
 @Controller
 public class Test {
@@ -24,7 +24,7 @@ public class Test {
 	}
 	@ResponseBody
 	@RequestMapping(value="/testPojo.do",method=RequestMethod.POST)
-	public User testPojo(User user){
+	public User7 testPojo(User7 user){
 	    System.out.println("testPojo: " + user);
 	    return user;
 	}
